@@ -1,0 +1,20 @@
+# Use root/example as user/password credentials
+version: '3.8'
+
+services:
+  cliente:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    networks:
+      - network
+
+  server:
+    image: tupfrcutn/elecciones-2023:1.0.0
+    ports:
+      - "8081:8081"
+    networks:
+      - network
+
+networks:
+  network:
