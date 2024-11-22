@@ -1,13 +1,39 @@
-# Use root/example as user/password credentials
 version: '3.8'
 
 services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: my_database
+      MYSQL_USER: user
+      MYSQL_PASSWORD: userpassword
+    ports:
+      - "3306:3306"
+    networks:
+      - network
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "user", "-puserpassword"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
   cliente:
     build:
       context: .
       dockerfile: Dockerfile
+    depends_on:
+      mysql:
+        condition: service_healthy
     networks:
       - network
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/my_database
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: userpassword
     ports:
       - "8081:8081"
 
@@ -20,3 +46,6 @@ services:
 
 networks:
   network:
+
+volumes:
+  mysql-data:

@@ -52,11 +52,23 @@
 			<artifactId>lombok</artifactId>
 		</dependency>
 
+		<!--    MySql    -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.28</version>
+		</dependency>
 		<!--    H2 Data Base dependency    -->
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<scope>runtime</scope>
+		</dependency>
+		<!--    cirucit braker    -->
+		<dependency>
+			<groupId>io.github.resilience4j</groupId>
+			<artifactId>resilience4j-spring-boot2</artifactId>
+			<version>2.0.2</version>
 		</dependency>
 
 		<!--    Model Mapper dependency    -->
